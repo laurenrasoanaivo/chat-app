@@ -1,7 +1,8 @@
-import { postRequest } from '../utils/apiUtils';
+import { getRequest, postRequest } from '../utils/apiUtils';
 import Cookies from 'universal-cookie';
-import { CreateUser, LoginUser } from '@/commons/types';
-import { API_URL } from '@/utils';
+import { CreateUser, LoginUser, User, UserforDomain, UsertoREST } from '@/commons/types';
+import { token } from '@/utils';
+import { cookies } from 'next/dist/client/components/headers';
 
 export const onLogin = async (data: LoginUser) => {
   const cookies = new Cookies();
@@ -13,7 +14,7 @@ export const onLogin = async (data: LoginUser) => {
   };
 
   try {
-    const userData = await postRequest(API_URL + url, data, options);
+    const userData = await postRequest(url, data, options);
     cookies.set('token', userData.user.token, {sameSite:'none'});
     window.location.href = '/profile';
   } catch (error) {
@@ -35,7 +36,7 @@ export const onSignup = async (data: CreateUser) => {
   };
 
   try {
-    const userData = await postRequest(API_URL + url, data, options);
+    const userData = await postRequest(url, data, options);
     window.location.href = '/login';
   } catch (error) {
     console.error('Erreur:', error);

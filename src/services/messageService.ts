@@ -1,6 +1,6 @@
 
 import { MessageUser } from "@/commons/types/message";
-import { API_URL, getRequest, postRequest, token } from "@/utils";
+import { getRequest, postRequest, token } from "@/utils";
 
 export const getMessagesByUserId = async (userId: number) => {
   let messages = null;
@@ -13,7 +13,7 @@ export const getMessagesByUserId = async (userId: number) => {
   };
 
   try {
-    const messageData = await getRequest(API_URL + url, options);
+    const messageData = await getRequest(url, options);
     console.log(messageData);
     messages = messageData.messages;
   } catch (error) {
@@ -40,7 +40,7 @@ export const onCreateMessage = async (data: MessageUser) => {
   };
 
   try {
-    const messageData = await postRequest(API_URL + url, data, options);
+    const messageData = await postRequest(url, data, options);
     console.log(messageData);
     
   } catch (error) {
