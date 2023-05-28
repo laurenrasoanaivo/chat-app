@@ -1,5 +1,5 @@
 
-import { MessageUser } from "@/commons/types/message";
+import { Message } from "@/commons/types/message";
 import { getRequest, postRequest, token } from "@/utils";
 
 export const getMessagesByUserId = async (userId: number) => {
@@ -25,11 +25,34 @@ export const getMessagesByUserId = async (userId: number) => {
   }
 };
 
+export const getMessagesByChannelId = async (channelId: number) => {
+  let messages = null;
+  const url = `/messages/channel/${channelId}`;
+  const options = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const messageData = await getRequest(url, options);
+    console.log(messageData);
+    messages = messageData.messages;
+  } catch (error) {
+    console.error('Erreur:', error);
+  }
+  await messagesByUser(channelId);
+  return {
+    props: {messages}
+  }
+};
+
 const messagesByUser = async (userId: number) => {
   console.log("Édition du canal avec ID:", userId);
 };
 
-export const onCreateMessage = async (data: MessageUser) => {
+export const onCreateMessage = async (data: Message) => {
   const url = `/message`;
 
   const options = {

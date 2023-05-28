@@ -2,13 +2,7 @@ import { User } from "./user";
 
 export interface Message {
   content: string,
-}
-
-export interface MessageUser extends Message {
   recipientId: number
-}
-
-export interface MessageChannel extends Message {
   channelId: number
 }
 
@@ -21,7 +15,7 @@ export interface MessageforDomain {
   channelId?: number;
 }
 
-export interface MessagetoREST extends MessageforDomain {
+export interface MessageToREST extends MessageforDomain {
   updateAt?: string;
   sender?: User;
 }

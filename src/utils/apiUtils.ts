@@ -1,26 +1,4 @@
 
-
-/*export const apiUtils = {
-  get: async (url: string, config?: RequestInit) => {
-    const response = await fetch(url, config);
-    return response.json();
-  },
-  post: async (url: string, data?: any, config?: RequestInit) => {
-    const requestOptions: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(config?.headers || {}),
-      },
-      body: JSON.stringify(data),
-      ...(config || {}),
-    };
-    
-    const response = await fetch(url, requestOptions);
-    return response.json();
-  },
-};*/
-
 import { UpdateUser } from "@/commons/types";
 import { API_URL } from "./apiUrl";
 

@@ -2,6 +2,7 @@
 import { AddMembers, CreateChannel } from "@/commons/types/channel";
 import { getRequest, postRequest, token } from "@/utils";
 import { Channel } from "diagnostics_channel";
+import { toast } from "react-toastify";
 
 export const getChannels = async () => {
   let channels = [];
@@ -38,6 +39,7 @@ export const onCreateChannel = async (data: CreateChannel) => {
 
   try {
     const channelData = await postRequest(url, data, options);
+    toast('Channel create successfuly', { hideProgressBar: true, autoClose: 2000, type: 'success' })
     window.location.href = '/channel';
     console.log(channelData);
     
@@ -61,6 +63,7 @@ export const onEditChannel = async (data: AddMembers, channelId: number) => {
 
   try {
     const channelData = await postRequest(url, data, options);
+    toast('Channel update successfuly', { hideProgressBar: true, autoClose: 2000, type: 'success' })
     window.location.href = '/channel';
     console.log(channelData);
     

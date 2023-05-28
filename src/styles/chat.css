@@ -1,0 +1,77 @@
+.message {
+    margin-bottom: 10px;
+}
+
+.sender-message {
+    text-align: right;
+    padding: 1%;
+}
+
+.sender-message-content {
+    text-align: right;
+    background-color: #007bff;
+    color: #fff;
+    padding: 1%;
+    border-radius: 10px;
+}
+
+.recipient-message {
+    text-align: left;
+    padding: 1%;
+}
+
+.recipient-message-content {
+    text-align: left;
+    background-color: #e6e7e7;
+    color: #000;
+    padding: 1%;
+    border-radius: 10px;
+}
+
+.containers {
+    position: relative;
+    height: 100%;
+    width: auto;
+    background-color: white;
+    margin-right: 15%;
+    margin-left: 15%;
+    border: 5px solid white;
+    border-radius: 10px;
+    overflow-x: hidden;
+}
+
+.containers-main {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: 80vh;
+    overflow-x: auto;
+    padding: 1%;
+}
+
+.containers-form {
+    margin-top: 2%;
+    height: auto;
+    margin-left: 10%;
+}
+
+.containers-input {
+    width: 60%;
+    border-radius: 10px;
+    margin-left: 10%;
+    border: 2px solid var(--grey);
+}
+
+.containers>form>.msg:focus {
+    border: none;
+    outline: 1px solid var(--mallow);
+}
+
+.containers-btn {
+    width: 10%;
+    height: 7vh;
+    background-color: var(--darkblue);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}

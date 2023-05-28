@@ -1,8 +1,7 @@
-import { getRequest, postRequest } from '../utils/apiUtils';
+import { postRequest } from '../utils/apiUtils';
 import Cookies from 'universal-cookie';
-import { CreateUser, LoginUser, User, UserforDomain, UsertoREST } from '@/commons/types';
-import { token } from '@/utils';
-import { cookies } from 'next/dist/client/components/headers';
+import { CreateUser, LoginUser } from '@/commons/types';
+import { toast } from 'react-toastify';
 
 export const onLogin = async (data: LoginUser) => {
   const cookies = new Cookies();
@@ -16,6 +15,7 @@ export const onLogin = async (data: LoginUser) => {
   try {
     const userData = await postRequest(url, data, options);
     cookies.set('token', userData.user.token, {sameSite:'none'});
+    toast('Login successfuly', { hideProgressBar: true, autoClose: 2000, type: 'success' })
     window.location.href = '/profile';
   } catch (error) {
     console.error('Erreur:', error);
@@ -37,6 +37,7 @@ export const onSignup = async (data: CreateUser) => {
 
   try {
     const userData = await postRequest(url, data, options);
+    toast('User created successfuly \n Login now', { hideProgressBar: true, autoClose: 2000, type: 'success' })
     window.location.href = '/login';
   } catch (error) {
     console.error('Erreur:', error);

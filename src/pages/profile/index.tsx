@@ -1,7 +1,6 @@
 
 import { getUser, } from '@/services/userService';
 import { serverSidePropsToLogin } from '@/services/utils';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import EditProfilForm from '@/commons/components/EditProfilForm';
@@ -9,7 +8,6 @@ import { UsertoREST } from '@/commons/types';
 import NavigationBar from '@/commons/components/NavigationBar';
 
 export const getServerSideProps = serverSidePropsToLogin;
-
 
 const profile = () => {
   const [user, setUser] = useState<UsertoREST>();
@@ -34,9 +32,9 @@ const profile = () => {
 
 
   return (
-      <div id='profile' className='chat'>
+      <div id='profile' className='containers-main'>
         <NavigationBar/>
-        <h1>Profile</h1>
+        <h2>Profile</h2>
         {user &&
           <div>
             <div>

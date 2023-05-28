@@ -1,79 +1,79 @@
+
 import NavigationBar from '@/commons/components/NavigationBar';
 import { UsertoREST } from '@/commons/types';
-import { MessageUser, MessagetoREST } from '@/commons/types/message';
-import { getMessagesByUserId, onCreateMessage } from '@/services/messageService';
-import { getUserById } from '@/services/userService';
+import { Message, MessageToREST } from '@/commons/types/message';
+import { getMessagesByUserId } from '@/services/messageService';
+import { getUser, getUserById } from '@/services/userService';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useState, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import React from 'react';
+import MessagesContainer from '@/commons/components/MessagesContainer';
+import { redirect } from '@/services';
 
-const Message = () => {
-  const { handleSubmit, register, control, setValue, reset, formState: { errors } } = useForm<MessageUser>();
+interface MessageProps {
+  initialMessages: MessageToREST[];
+  recipientData: UsertoREST | null;
+  senderData: UsertoREST | null;
+}
+
+const Message = ({ initialMessages, recipientData, senderData }: MessageProps) => {
+  const { setValue, formState: { errors } } = useForm<Message>();
   const router = useRouter();
   const { user_id } = router.query;
-  const [messages, setMessages] = useState<MessagetoREST[]>();
-  const [recipient, setRecipient] = useState<UsertoREST | null>();
+  const [messages, setMessages] = useState<MessageToREST[]>(initialMessages);
+  const [recipient, setRecipient] = useState<UsertoREST | null>(recipientData);
+  const [sender, setSender] = useState<UsertoREST | null>(senderData);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    async function fetchData() {
-      if (user_id) {
-        const userMessageData = await getMessagesByUserId(Number(user_id));
-        const recipientUserData = await getUserById(Number(user_id));
-        setRecipient(recipientUserData.props.user)
-        setMessages(userMessageData.props.messages);
-        setValue('recipientId', Number(user_id));
-      }
-    }
     fetchData();
   }, [user_id]);
 
-  const handleSendMessage = handleSubmit((data) => {
-    if (data.content.trim() !== '') {
-      onCreateMessage(data);
-      const recipientId = data.recipientId;
-      reset({ content: '', recipientId });
+  const fetchData = async () => {
+    if (user_id) {
+      const [userMessageData, recipientUserData, userData] = await Promise.all([
+        getMessagesByUserId(Number(user_id)),
+        getUserById(Number(user_id)),
+        getUser()
+      ]);
+
+      setSender(userData.props.user);
+      setRecipient(recipientUserData.props.user);
+      setMessages(userMessageData.props.messages);
+      setValue('recipientId', Number(user_id));
     }
-  });
+  };
 
   return (
     <div>
-      <NavigationBar />
-      <h2>Direct Messages</h2>
-      <h3>Recipient: {recipient?.name}</h3>
-
-      <div>
-        {messages != null &&
-          messages.map((message, index) => (
-            <div key={index}>
-              <p>{message.sender?.name}</p>
-              <p>{message.createdAt}</p>
-              <p>{message.content}</p>
-            </div>
-          ))}
+      <NavigationBar/>
+      <div className=''>
+        <MessagesContainer messagesContainerRef={messagesContainerRef} messages={messages} setMessages={setMessages} sender={sender} recipient_id={String(user_id)} />
       </div>
-
-      <form onSubmit={handleSendMessage}>
-        <input type="hidden" {...register('recipientId')} defaultValue={user_id} />
-
-        <Controller
-          name="content"
-          control={control}
-          defaultValue=""
-          rules={{ required: 'Message content is required' }}
-          render={({ field, fieldState }) => (
-            <textarea
-              {...field}
-              value={field.value}
-              onChange={(e) => field.onChange(e.target.value)}
-              placeholder="Enter your message..."
-            />
-          )}
-        />
-        {errors.content && <p>{errors.content.message}</p>}
-        <button type="submit">Send</button>
-      </form>
     </div>
   );
 };
+
+export async function getServerSideProps(context: any) {
+  const { user_id } = context.query;
+  const { req } = context;
+  const token = req.cookies.token;
+
+  if (!token) {
+    return redirect('/login');
+  }
+  const [userMessageData, recipientUserData] = await Promise.all([
+    getMessagesByUserId(Number(user_id)),
+    getUser()
+  ]);
+
+  return {
+    props: {
+      initialMessages: userMessageData.props.messages,
+      recipientData: recipientUserData.props.user,
+    },
+  };
+}
 
 export default Message;

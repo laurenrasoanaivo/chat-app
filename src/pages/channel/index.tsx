@@ -26,7 +26,7 @@ const channel = () => {
     }, []);
 
   return (
-    <div className='chat'>
+    <div className='containers-main'>
       <NavigationBar />
       <div className='border-bottom p-3'>
         <h3>Online</h3>
@@ -43,7 +43,7 @@ const channel = () => {
           channels != null && 
           <div className="list-group">
             {channels.map((e, i) => 
-            <Link href={``} className="llist-group-item list-group-item-action" key={i}>{e.name}
+            <Link href={`/channel/${i+1}`} className="list-group-item list-group-item-action" key={i}>{e.name}
               <button className="btn btn-secondary" 
                 onClick={() => window.location.href = `/channel/edit/${i+1}`}>
                 Edit</button>

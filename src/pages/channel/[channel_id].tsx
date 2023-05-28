@@ -1,43 +1,81 @@
-import { User } from '@/commons/types';
-import { AddMembers } from '@/commons/types/channel';
-import { onEditChannel } from '@/services/channelService';
-import { getAllUsers } from '@/services/userService';
-import { serverSidePropsToLogin } from '@/services/utils';
+
+import NavigationBar from '@/commons/components/NavigationBar';
+import { UsertoREST } from '@/commons/types';
+import { Message, MessageToREST } from '@/commons/types/message';
+import { getMessagesByChannelId } from '@/services/messageService';
+import { getUser, getUserById } from '@/services/userService';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import React from 'react';
+import MessagesContainer from '@/commons/components/MessagesContainer';
+import { ChanneltoREST } from '@/commons/types/channel';
+import { redirect } from '@/services';
 
-export const getServerSideProps = serverSidePropsToLogin;
+interface MessageProps {
+  initialMessages: MessageToREST[];
+  channelData: ChanneltoREST | null;
+  senderData: UsertoREST | null;
+}
 
-const editChannelForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<AddMembers>();
-  const [users, setUsers] = useState<User[]>();
-
-  useEffect(() => {
-    async function fetchData() {
-      const userData = await getAllUsers();
-      setUsers(userData.props.users);
-    }
-
-    fetchData();
-  }, []);
-
+const ChannelMessage = ({ initialMessages, channelData, senderData }: MessageProps) => {
+  const { setValue, formState: { errors } } = useForm<Message>();
   const router = useRouter();
   const { channel_id } = router.query;
+  const [messages, setMessages] = useState<MessageToREST[]>(initialMessages);
+  const [channel, setChannel] = useState<ChanneltoREST | null>(channelData);
+  const [sender, setSender] = useState<UsertoREST | null>(senderData);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    fetchData();
+  }, [channel_id]);
+
+  const fetchData = async () => {
+    if (channel_id) {
+      const [userMessageData, channelData, userData] = await Promise.all([
+        getMessagesByChannelId(Number(channel_id)),
+        getUserById(Number(channel_id)),
+        getUser()
+      ]);
+
+      setSender(userData.props.user);
+      setChannel(channelData.props.user);
+      setMessages(userMessageData.props.messages);
+      setValue('recipientId', Number(channel_id));
+    }
+  };
 
   return (
-    <form name='editChannelForm' onSubmit={handleSubmit((data) => onEditChannel(data, Number(channel_id)))}>
-      <select multiple {...register('members')}>
-        {users != null && users.map((user) => (
-          <option key={user.id} value={user.id}>
-            {user.name}
-          </option>
-        ))}
-      </select>
-      <button type="submit">Envoyer</button>
-    </form>
+    <div>
+      <NavigationBar />
+      <div className=''>
+        <MessagesContainer messagesContainerRef={messagesContainerRef} messages={messages} setMessages={setMessages} sender={sender} channel_id={String(channel_id)} />
+      </div>
+    </div>
   );
 };
 
-export default editChannelForm;
+export async function getServerSideProps(context: any) {
+  const { channel_id } = context.query;
+  const { req } = context;
+  const token = req.cookies.token;
+
+  if (!token) {
+    return redirect('/login');
+  }
+
+  const [userMessageData, senderUserData] = await Promise.all([
+    getMessagesByChannelId(Number(channel_id)),
+    getUser()
+  ]);
+
+  return {
+    props: {
+      initialMessages: userMessageData.props.messages,
+      senderData: senderUserData.props.user,
+    },
+  };
+}
+
+export default ChannelMessage;

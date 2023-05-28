@@ -1,0 +1,15 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    --darkblue: #316879;
+    --blueSea: #aed6dc;
+    --mallow: #d9a5b3;
+    --grey: #ced7d8;
+}
+
+body {
+    position: relative;
+    height: 100vh;
+    overflow-x: hidden;
+}

@@ -1,5 +1,6 @@
 import { UpdateUser, UsertoREST } from "@/commons/types";
 import { getRequest, putRequest, token } from "@/utils";
+import { toast } from "react-toastify";
 
 export const getUser = async () => {
     let user = null;
@@ -52,9 +53,11 @@ export const getUser = async () => {
     const usersData = await getAllUsers();
     users = usersData.props.users;
 
-    for(let i=0; i<users.length; i++){
-      if(users[i].id == userId){
-        user = users[i];
+    if(users && users.length){
+      for(let i=0; i<users.length; i++){
+        if(users[i].id == userId){
+          user = users[i];
+        }
       }
     }
   
@@ -76,8 +79,7 @@ export const getUser = async () => {
   
     try {
       const userData = await putRequest(url, data, options);
-      console.log(data);
-      
+      toast('Profile update successfuly \n Now close please', { hideProgressBar: true, autoClose: 2000, type: 'success' })
       user = userData.user;
     } catch (error) {
       console.error('Erreur:', error);
