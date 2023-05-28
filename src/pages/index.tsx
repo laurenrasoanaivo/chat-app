@@ -1,22 +1,21 @@
+import NavigationBar from "@/commons/components/NavigationBar";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Home() {
-  const router = useRouter();
-  useEffect(() => {
-    const user =  localStorage.getItem('user');
-
-    if (user) {
-      router.push('/Chat');
-    } else {
-      router.push('/Signup');
-    }
-  }, []);
+  const onClick = () => toast('Toast is good', { hideProgressBar: true, autoClose: 2000, type: 'default' })
 
   return (
     <>
-      <Link href="/Signup">Sign up</Link>
+      <NavigationBar />
+        <div>
+          <main>
+            <h2>Home Page</h2>
+          </main>
+        </div>
+      <button onClick={onClick}> Click Me</button>
+      <ToastContainer />
     </>
   )
 }
