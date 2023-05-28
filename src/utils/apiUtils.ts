@@ -22,11 +22,10 @@
 };*/
 
 import { UpdateUser } from "@/commons/types";
-import { API_URL } from "./apiUrl";
 
 export const postRequest = async (url: string, data: any, options: RequestInit = {}) => {
   try {
-    const response = await fetch(API_URL + url, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +51,7 @@ export const postRequest = async (url: string, data: any, options: RequestInit =
 
 export const getRequest = async (url: string, options: RequestInit = {}) => {
   try {
-    const response = await fetch(API_URL + url, {
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +76,7 @@ export const getRequest = async (url: string, options: RequestInit = {}) => {
 
 export const putRequest = async (url: string, data: UpdateUser, options: RequestInit = {}) => {
   try {
-    const response = await fetch(API_URL + url, {
+    const response = await fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

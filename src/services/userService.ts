@@ -1,9 +1,8 @@
 import { UpdateUser, UsertoREST } from "@/commons/types";
-import { getRequest, putRequest, token } from "@/utils";
+import { API_URL, getRequest, putRequest, token } from "@/utils";
 
 export const getUser = async () => {
     let user = null;
-    
     
     const url = '/user';
     const options = {
@@ -13,7 +12,7 @@ export const getUser = async () => {
     };
   
     try {
-      const userData = await getRequest(url, options);
+      const userData = await getRequest(API_URL + url, options);
       user = userData.user;
     } catch (error) {
       console.error('Erreur:', error);
@@ -35,7 +34,7 @@ export const getUser = async () => {
     };
   
     try {
-      const userData = await getRequest(url, options);
+      const userData = await getRequest(API_URL + url, options);
       users = userData.users;
     } catch (error) {
       console.error('Erreur:', error);
@@ -75,7 +74,7 @@ export const getUser = async () => {
     };
   
     try {
-      const userData = await putRequest(url, data, options);
+      const userData = await putRequest(API_URL + url, data, options);
       console.log(data);
       
       user = userData.user;
@@ -87,3 +86,7 @@ export const getUser = async () => {
       props: {user},
     };
   };
+
+  export const addExistantUserToChatEngine = () => {
+    
+  }

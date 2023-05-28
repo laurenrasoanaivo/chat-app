@@ -1,6 +1,6 @@
 
 import { AddMembers, CreateChannel } from "@/commons/types/channel";
-import { getRequest, postRequest, token } from "@/utils";
+import { API_URL, getRequest, postRequest, token } from "@/utils";
 import { Channel } from "diagnostics_channel";
 
 export const getChannels = async () => {
@@ -14,7 +14,7 @@ export const getChannels = async () => {
   };
 
   try {
-    const channelData = await getRequest(url, options);
+    const channelData = await getRequest(API_URL + url, options);
     channels = channelData.channels;
     console.log(channels);
   } catch (error) {
@@ -37,7 +37,7 @@ export const onCreateChannel = async (data: CreateChannel) => {
   };
 
   try {
-    const channelData = await postRequest(url, data, options);
+    const channelData = await postRequest(API_URL + url, data, options);
     window.location.href = '/channel';
     console.log(channelData);
     
@@ -60,7 +60,7 @@ export const onEditChannel = async (data: AddMembers, channelId: number) => {
   };
 
   try {
-    const channelData = await postRequest(url, data, options);
+    const channelData = await postRequest(API_URL + url, data, options);
     window.location.href = '/channel';
     console.log(channelData);
     
