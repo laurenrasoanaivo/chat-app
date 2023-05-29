@@ -12,8 +12,10 @@ const createChannelForm: React.FC = () => {
   const {push} = useRouter();
 
   return (
+    <div className='container-fluid w-50 text-center p-5'>
+      <h3 className='mb-5'>Create Channel</h3>
     <form name='createChannelForm' onSubmit={handleSubmit(onCreateChannel)}>
-      <div className="mb-3">
+      <div className="mb-4">
         <input
           type='text'
           id="name"
@@ -23,7 +25,7 @@ const createChannelForm: React.FC = () => {
         />
         {errors.name && <span>{errors.name.message}</span>}
       </div>
-      <div className="mb-3">
+      <div className="mb-4">
         <input
           type="text"
           id="type"
@@ -33,7 +35,7 @@ const createChannelForm: React.FC = () => {
         />
         {errors.type && <span>{errors.type.message}</span>}
       </div>
-      <div className="mb-3">
+      <div className="mb-4">
         <input
           type="text"
           id="members"
@@ -43,9 +45,12 @@ const createChannelForm: React.FC = () => {
         />
         {errors.members && <span>{errors.members.message}</span>}
       </div>
-      <button className="btn btn-primary" type="submit">Create</button>
-      <button onClick={() => push('/channel')} className="btn btn-secondary">Annuler</button>
+      <div className='mt-5'>
+      <button className="btn btn-primary mx-2" type="submit">Create</button>
+      <button onClick={() => push('/channel')} className="btn btn-secondary mx-2">Annuler</button>
+      </div>
     </form>
+    </div>
   );
 };
 

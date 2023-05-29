@@ -11,8 +11,10 @@ const loginForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginUser>();
 
   return (
-    <>
-      <Link href="/sign-up">Sign up</Link>
+    <div className='container-fluid w-50 p-4'>
+      <div className='mb-3'>
+        <Link href="/sign-up">Sign up</Link>
+      </div>
       <form name='loginForm' onSubmit={handleSubmit(onLogin)}>
         <div className="mb-3">
           <label className="form-label" htmlFor="email">Email</label>
@@ -34,9 +36,11 @@ const loginForm: React.FC = () => {
           />
           {errors.password && <span>{errors.password.message}</span>}
         </div>
-        <button className="btn btn-primary" type="submit">Login</button><br />
+        <div className='text-center'>
+          <button className="btn btn-primary my-2" type="submit">Login</button><br />
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 

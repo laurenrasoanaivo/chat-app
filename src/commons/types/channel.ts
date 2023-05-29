@@ -6,7 +6,7 @@ export interface Channel {
   }
 
   export interface AddMembers {
-    members: [];
+    members: number[];
   }
 
   export interface CreateChannel {

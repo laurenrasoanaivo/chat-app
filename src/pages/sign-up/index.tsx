@@ -12,9 +12,12 @@ const registrationForm: React.FC = () => {
   const password = watch('password', '');
 
   return (
+    <div className='container-fluid w-50 p-4'>
     <form name='registrationForm' onSubmit={handleSubmit(onSignup)}>
+      <div className='mb-4'>
       <Link href="/login">Sign in</Link>
-      <div className="mb-3">
+      </div>
+      <div className="mb-4">
         <input
           type='text'
           id="name"
@@ -24,7 +27,7 @@ const registrationForm: React.FC = () => {
         />
         {errors.name && <span>{errors.name.message}</span>}
       </div>
-      <div>
+      <div className="mb-4">
         <input
           type="email"
           id="email"
@@ -34,7 +37,7 @@ const registrationForm: React.FC = () => {
         />
         {errors.email && <span>{errors.email.message}</span>}
       </div>
-      <div>
+      <div className="mb-4">
         <input
           type="password"
           id="password"
@@ -44,7 +47,7 @@ const registrationForm: React.FC = () => {
         />
         {errors.password && <span>{errors.password.message}</span>}
       </div>
-      <div>
+      <div className="mb-4">
         <input
           type="password"
           id="confirmPassword"
@@ -54,8 +57,11 @@ const registrationForm: React.FC = () => {
         />
         {errors.confirmPassword && (<span>{errors.confirmPassword.message}</span>)}
       </div>
+      <div className='text-center my-2'>
       <button className="btn btn-primary"  type="submit">Register</button>
+      </div>
     </form>
+    </div>
   );
 };
 

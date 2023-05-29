@@ -15,7 +15,8 @@ interface MessagesContainerProps{
 
 const MessagesContainer = ({ messagesContainerRef, messages, sender, recipient_id, channel_id, setMessages }: MessagesContainerProps) => {
     return (
-        <Container ref={messagesContainerRef} fluid className="content-container w-50 mt-5 mb-5 py-5 overflow-y-auto h-100">
+      <div className="my-5 py-4">
+        <Container ref={messagesContainerRef} fluid className="content-container w-50 overflow-y-auto">
         {messages != null &&
             messages
               .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
@@ -24,6 +25,7 @@ const MessagesContainer = ({ messagesContainerRef, messages, sender, recipient_i
               ))}
         {recipient_id!=null ? <SendMessageForm messagesContainerRef={messagesContainerRef} recipient_id={String(recipient_id)} sender={sender} setMessages={setMessages} /> : <SendMessageForm messagesContainerRef={messagesContainerRef} channel_id={String(channel_id)} sender={sender} setMessages={setMessages} />}
       </Container>
+      </div>
     )
 }
 

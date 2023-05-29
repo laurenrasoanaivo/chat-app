@@ -1,7 +1,6 @@
 
 import { AddMembers, CreateChannel } from "@/commons/types/channel";
 import { getRequest, postRequest, token } from "@/utils";
-import { Channel } from "diagnostics_channel";
 import { toast } from "react-toastify";
 
 export const getChannels = async () => {

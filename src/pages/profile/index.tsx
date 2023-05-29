@@ -32,18 +32,18 @@ const profile = () => {
 
 
   return (
-      <div id='profile' className='containers-main'>
+      <div id='profile' className='container-fluid w-50 text-center mt-4 p-5'>
         <NavigationBar/>
-        <h2>Profile</h2>
+        <h2 className='mb-4'>Profile</h2>
         {user &&
           <div>
             <div>
-              <p>Name: {user.name}</p>
-              <p>Email: {user.email}</p>
+              <p>Name: <span className='text-secondary'>{user.name}</span></p>
+              <p>Email: <span className='text-secondary'>{user.email}</span></p>
               <form >
                 <label htmlFor="bio">Bio:</label><br></br>
-                <textarea defaultValue={user.bio} /><br></br>
-                <Button variant="primary" onClick={handleOpenModal}>
+                <textarea className='text-secondary' defaultValue={user.bio} /><br></br>
+                <Button className='mt-4' variant="primary" onClick={handleOpenModal}>
                   Edit
                 </Button>
               </form>
