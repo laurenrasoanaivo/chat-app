@@ -14,10 +14,11 @@ export const onLogin = async (data: LoginUser) => {
 
   try {
     const userData = await postRequest(url, data, options);
-    cookies.set('token', userData.user.token, {sameSite:'none'});
+    cookies.set('token', userData.user.token, {sameSite:'strict'});
     toast('Login successfuly', { hideProgressBar: true, autoClose: 2000, type: 'success' })
     window.location.href = '/profile';
   } catch (error) {
+    toast('Login failed \n Verify your email or password', { hideProgressBar: true, autoClose: 2000, type: 'error' })
     console.error('Erreur:', error);
   }
 

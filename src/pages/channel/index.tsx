@@ -39,21 +39,22 @@ const channel = () => {
       <div className='text-center mt-3'>
         <Link href="/channel/create">Create Channel</Link>
       </div>
-      <h1>Channels</h1>
       <div>
         {
-          channels != null &&
-          <div className="list-group">
-            {channels.map((e, i) =>
-              <div className='hstack gap-3 p-1'>
-                <Link href={`/channel/${e.id}`} className="list-group-item list-group-item-action rounded" key={i}>{e.name}</Link>
-                <div className='text-start'>
-                  <button className="btn btn-outline-secondary text-start"
-                    onClick={() => window.location.href = `/channel/edit/${e.id}`}>
-                    Edit</button>
+          channels != null && <div>
+            <h3>Channels</h3>
+            <div className="list-group">
+              {channels.map((e, i) =>
+                <div className='hstack gap-3 p-1'>
+                  <Link href={`/channel/${e.id}`} className="list-group-item list-group-item-action rounded" key={i}>{e.name}</Link>
+                  <div className='text-start'>
+                    <button className="btn btn-outline-secondary text-start"
+                      onClick={() => window.location.href = `/channel/edit/${e.id}`}>
+                      Edit</button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         }
       </div>

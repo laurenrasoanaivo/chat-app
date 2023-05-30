@@ -12,7 +12,7 @@ export interface Channel {
   export interface CreateChannel {
     name: string;
     type: string;
-    members: string;
+    members: number[];
   }
   
   export interface ChannelforDomain {
