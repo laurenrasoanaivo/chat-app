@@ -1,5 +1,5 @@
 
-import { AddMembers, CreateChannel } from "@/commons/types/channel";
+import { CreateChannel, EditChannel } from "@/commons/types/channel";
 import { getRequest, postRequest, token } from "@/utils";
 import { toast } from "react-toastify";
 
@@ -27,8 +27,12 @@ export const getChannels = async () => {
 };
 
 export const onCreateChannel = async (data: CreateChannel) => {
-  
   const url = '/channel';
+  const newChannel = {
+    name: data.channelName,
+    type: data.type,
+    members: data.members
+  }
   const options = {
     headers: {
       'Content-Type': 'application/json',
@@ -37,12 +41,13 @@ export const onCreateChannel = async (data: CreateChannel) => {
   };
 
   try {
-    const channelData = await postRequest(url, data, options);
+    const channelData = await postRequest(url, newChannel, options);
     toast('Channel create successfuly', { hideProgressBar: true, autoClose: 2000, type: 'success' })
     window.location.href = '/channel';
     console.log(channelData);
     
   } catch (error) {
+    toast('Failed create Channel', { hideProgressBar: true, autoClose: 2000, type: 'error' })
     console.error('Erreur:', error);
   }
 
@@ -51,7 +56,7 @@ export const onCreateChannel = async (data: CreateChannel) => {
   };
 };
 
-export const onEditChannel = async (data: AddMembers, channelId: number) => {
+export const onEditChannel = async (data: EditChannel, channelId: number) => {
   const url = `/channels/${channelId}/members`;
   const options = {
     headers: {
@@ -72,7 +77,7 @@ export const onEditChannel = async (data: AddMembers, channelId: number) => {
   await editChannel(data, channelId);
 };
 
-const editChannel = async (data: AddMembers, channelId: number) => {
+const editChannel = async (data: EditChannel, channelId: number) => {
   console.log("Édition du canal avec ID:", channelId);
   console.log("Nouvelles données:", data);
 };

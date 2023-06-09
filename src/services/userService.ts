@@ -68,7 +68,13 @@ export const getUser = async () => {
 
   export const updateUser = async (data: UpdateUser) => {
     let user = null;
-    
+    const newUser = {
+      name: data.name,
+      oldPassword: data.currentPassword,
+      password: data.newPassword,
+      confirmPassword: data.confirmPassword,
+      bio: data.bio
+    }
     const url = '/user';
     const options = {
       headers: {
@@ -78,10 +84,11 @@ export const getUser = async () => {
     };
   
     try {
-      const userData = await putRequest(url, data, options);
-      toast('Profile update successfuly \n Now close please', { hideProgressBar: true, autoClose: 2000, type: 'success' })
+      const userData = await putRequest(url, newUser, options);
+      toast('Profile update successfuly', { hideProgressBar: true, autoClose: 2000, type: 'success' })
       user = userData.user;
     } catch (error) {
+      toast('Failed to update Profile \n Wrong Password', { hideProgressBar: true, autoClose: 2000, type: 'error' })
       console.error('Erreur:', error);
     }
   

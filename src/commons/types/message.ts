@@ -1,7 +1,7 @@
 import { User } from "./user";
 
 export interface Message {
-  content: string,
+  message: string,
   recipientId: number
   channelId: number
 }

@@ -2,7 +2,7 @@ import { CreateUser } from '@/commons/types/user';
 import { onSignup } from '@/services';
 import { serverSidePropsToProfile } from '@/services/utils';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 export const getServerSideProps = serverSidePropsToProfile;
@@ -58,7 +58,7 @@ const registrationForm: React.FC = () => {
         {errors.confirmPassword && (<span>{errors.confirmPassword.message}</span>)}
       </div>
       <div className='text-center my-2'>
-      <button className="btn btn-primary"  type="submit">Register</button>
+      <button className="registerButton btn btn-primary"  type="submit">Register</button>
       </div>
     </form>
     </div>

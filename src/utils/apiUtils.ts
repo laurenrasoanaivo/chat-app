@@ -53,7 +53,7 @@ export const getRequest = async (url: string, options: RequestInit = {}) => {
   }
 };
 
-export const putRequest = async (url: string, data: UpdateUser, options: RequestInit = {}) => {
+export const putRequest = async (url: string, data: any, options: RequestInit = {}) => {
   try {
     const response = await fetch(API_URL + url, {
       method: 'PUT',

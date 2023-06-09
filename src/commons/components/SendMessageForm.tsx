@@ -27,14 +27,14 @@ const SendMessageForm = ({ recipient_id, channel_id, sender, setMessages, messag
   };
 
   const handleSendMessage = handleSubmit((data: Message) => {
-    if (data.content?.trim() !== '') {
+    if (data.message?.trim() !== '') {
       const currentDate = new Date().toISOString();
       const newData: MessageToREST = {
         senderId: sender?.id,
         recipientId: undefined,
         createdAt: currentDate,
         id: undefined,
-        content: data.content,
+        content: data.message,
         channelId: undefined,
         updateAt: '',
         sender: { name: sender?.name }
@@ -42,7 +42,7 @@ const SendMessageForm = ({ recipient_id, channel_id, sender, setMessages, messag
 
       onCreateMessage(data);
       const recipientId = data.recipientId;
-      reset({ content: '', recipientId });
+      reset({ message: '', recipientId });
       setMessages(prevMessages => [...prevMessages, newData]);
       if (messagesContainerRef.current) {
         messagesContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -61,16 +61,17 @@ const SendMessageForm = ({ recipient_id, channel_id, sender, setMessages, messag
         {recipient_id != null && <input type="hidden" {...register('recipientId')} defaultValue={Number(recipient_id)} />}
         {channel_id != null && <input type="hidden" {...register('channelId')} defaultValue={channel_id} />}
 
-        <div className='d-flex justify-content-center'>
+        <div className='d-flex justify-message-center'>
           <div className='px-2'>
             <Controller
-              name="content"
+              name="message"
               control={control}
               defaultValue=""
               rules={{ required: '' }}
               render={({ field }) => (
                 <textarea
                   {...field}
+                  name='message'
                   value={field.value}
                   ref={textareaRef}
                   onKeyDown={handleKeyDown}
@@ -79,10 +80,10 @@ const SendMessageForm = ({ recipient_id, channel_id, sender, setMessages, messag
                 />
               )}
             />
-            {errors.content && <p>{errors.content.message}</p>}
+            {errors.message && <p>{errors.message.message}</p>}
           </div>
           <div className='p-2'>
-            <button className='btn btn-dark border border-light-subtle' type="submit">Send</button>
+            <button className='sendMessageButton btn btn-dark border border-light-subtle' type="submit">Send Message</button>
           </div>
         </div>
 

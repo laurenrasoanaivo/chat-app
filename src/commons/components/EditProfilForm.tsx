@@ -28,7 +28,7 @@ const EditProfilForm: React.FC<EditProfileFormProps> = ({ user }) => {
             <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email</label>
                 <input
-                    type="text"
+                    type="email"
                     className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                     id="email"
                     defaultValue={user.email}
@@ -87,7 +87,7 @@ const EditProfilForm: React.FC<EditProfileFormProps> = ({ user }) => {
                 )}
             </div>
 
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="updateProfileButton btn btn-primary">Update Profile</button>
         </form>
     );
 };

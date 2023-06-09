@@ -3,8 +3,9 @@ import Cookies from 'universal-cookie';
 import { CreateUser, LoginUser } from '@/commons/types';
 import { toast } from 'react-toastify';
 
+const cookies = new Cookies();
+
 export const onLogin = async (data: LoginUser) => {
-  const cookies = new Cookies();
   const url = '/users/login';
   const options = {
     headers: {
@@ -50,7 +51,6 @@ export const onSignup = async (data: CreateUser) => {
 };
 
 export const onSignout = () => {
-  const cookies = new Cookies();
-  cookies.remove('token');
+  cookies.remove('token', {path: '/'});
   window.location.href = '/login';
 };

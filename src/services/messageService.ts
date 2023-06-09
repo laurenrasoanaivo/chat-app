@@ -54,7 +54,11 @@ const messagesByUser = async (userId: number) => {
 
 export const onCreateMessage = async (data: Message) => {
   const url = `/message`;
-
+  const newMessage = {
+    content: data.message,
+    recipientId: data.recipientId,
+    channelId: data.channelId
+  }
   const options = {
     headers: {
       'Content-Type': 'application/json',
@@ -63,7 +67,7 @@ export const onCreateMessage = async (data: Message) => {
   };
 
   try {
-    const messageData = await postRequest(url, data, options);
+    const messageData = await postRequest(url, newMessage, options);
     console.log(messageData);
     
   } catch (error) {
