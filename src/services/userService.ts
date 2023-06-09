@@ -79,7 +79,7 @@ export const getUser = async () => {
   
     try {
       const userData = await putRequest(url, data, options);
-      toast('Profile update successfuly \n Now close please', { hideProgressBar: true, autoClose: 2000, type: 'success' })
+      toast('Profile update successfuly', { hideProgressBar: true, autoClose: 2000, type: 'success' })
       user = userData.user;
     } catch (error) {
       console.error('Erreur:', error);

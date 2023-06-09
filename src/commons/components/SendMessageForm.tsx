@@ -82,7 +82,7 @@ const SendMessageForm = ({ recipient_id, channel_id, sender, setMessages, messag
             {errors.content && <p>{errors.content.message}</p>}
           </div>
           <div className='p-2'>
-            <button className='btn btn-dark border border-light-subtle' type="submit">Send</button>
+            <button className='sendMessageButton btn btn-dark border border-light-subtle' type="submit">Send Message</button>
           </div>
         </div>
 

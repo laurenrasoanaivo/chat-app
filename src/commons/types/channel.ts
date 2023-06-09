@@ -5,7 +5,8 @@ export interface Channel {
     type: string;
   }
 
-  export interface AddMembers {
+  export interface EditChannel {
+    type: string;
     members: number[];
   }
 

@@ -32,41 +32,9 @@ const profile = () => {
 
 
   return (
-      <div id='profile' className='container-fluid w-50 text-center mt-4 p-5'>
+      <div id='profile' className='container-fluid w-50 mt-4 p-5'>
         <NavigationBar/>
-        <h2 className='mb-4'>Profile</h2>
-        {user &&
-          <div>
-            <div>
-              <p>Name: <span className='text-secondary'>{user.name}</span></p>
-              <p>Email: <span className='text-secondary'>{user.email}</span></p>
-              <form >
-                <label htmlFor="bio">Bio:</label><br></br>
-                <textarea className='text-secondary' defaultValue={user.bio} /><br></br>
-                <Button className='mt-4' variant="primary" onClick={handleOpenModal}>
-                  Edit
-                </Button>
-              </form>
-            </div>
-            <div>
-              <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Edit Profile Form</Modal.Title>
-                </Modal.Header>
-
-                <Modal.Body>
-                  <EditProfilForm user={user} />
-                </Modal.Body>
-
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseModal}>
-                    Close
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </div>
-          </div>
-        }
+        {user != null && <EditProfilForm user={user} />}
       </div>
   );
 

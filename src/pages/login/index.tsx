@@ -37,7 +37,7 @@ const loginForm: React.FC = () => {
           {errors.password && <span>{errors.password.message}</span>}
         </div>
         <div className='text-center'>
-          <button className="btn btn-primary my-2" type="submit">Login</button><br />
+          <button className="loginButton btn btn-primary my-2" type="submit">Login</button><br />
         </div>
       </form>
     </div>
